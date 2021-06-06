@@ -20,7 +20,7 @@ To clone and run the application, you will need to have [Git](https://git-scm.co
 
 ```bash
 # Clone this repository
-$ git clone 
+$ git clone https://github.com/lucianopedesol/Serverless-Telemetry.git
 
 # Access the repository
 $ cd Serveless-NextJs
