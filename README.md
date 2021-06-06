@@ -6,9 +6,7 @@
   <h4 align="left">
     Development of an application using Vercel's Serverless Functions to get telemetry data in MongoDB using ReactJS and Next.js.
   </h4>
-   <h4 align="left">
-      Access the tutorial <a href="https://www.youtube.com/watch?v=Cz55Jmhfw84">here.</a>
-  </h4>
+   
 </div>
 
 ---
@@ -23,7 +21,7 @@ To clone and run the application, you will need to have [Git](https://git-scm.co
 $ git clone https://github.com/lucianopedesol/Serverless-Telemetry.git
 
 # Access the repository
-$ cd Serveless-NextJs
+$ cd Serverless-Telemetry
 
 # Install the dependencies
 $ yarn install
