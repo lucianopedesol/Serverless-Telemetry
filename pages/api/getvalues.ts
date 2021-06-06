@@ -40,6 +40,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     temperatureData.forEach(e => listTemperature.push(e))
 
   ]).then((values) => {
+    console.log(listHumidity)
     return response.status(201).json({
       humidity: listHumidity,
       temperature: listTemperature
