@@ -13,7 +13,7 @@ export default function CardGraph({label, data, isDataLoad = false}) {
         alignItems="stretch"
         padding={8}
         marginTop={4}
-        width="95%"
+        width="100%"
         height="500px"
       >
 

@@ -29,7 +29,7 @@ export default function CardInformation({type, label, value, sensorValue = null}
             justifyContent="center"
             padding={8}
             marginTop={4}
-            width={{base: "95%", lg: "30%"}}
+            width={{base: "100%", lg: "30%"}}
             height="200"
         >
             {type=="C"?
