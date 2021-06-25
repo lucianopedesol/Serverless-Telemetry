@@ -52,11 +52,10 @@ export default function Home() {
   }
 
   async function getWeather(): Promise<WeatherData> {
-    const { data } = await axios.get(process.env.URLWEATHERMAP);
+    const { data } = await axios.get('https://api.openweathermap.org/data/2.5/find?q=Cariacica&units=metric&lang=pt_br&appid=a0d8bd1b726d4aa647314a354d4aea55');
 
     if(data?.list?.length > 0){
       const retFirstWeather = weatherData(data?.list[0]);
-      console.log("Data", retFirstWeather);
       return retFirstWeather;
     } else {
       console.log("Sem dados");
