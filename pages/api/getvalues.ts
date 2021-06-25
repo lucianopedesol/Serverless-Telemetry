@@ -26,18 +26,22 @@ export default async (request: VercelRequest, response: VercelResponse) => {
 
   let listHumidity = [];
   let listTemperature = [];
+  let listRain = [];
 
   const db = await connectToDatabase(process.env.CONNECTIONSTRING);
 
   const humidityCollection = db.collection('humidity');
   const temperatureCollection = db.collection('temperature');
+  const rainCollection = db.collection('rain');
 
   const humidityData = humidityCollection.find().sort({subscribeAt:-1}).limit(10);
   const temperatureData = temperatureCollection.find().sort({subscribeAt:-1}).limit(10);
+  const rainData = rainCollection.find().sort({subscribeAt:-1}).limit(1);
 
   await Promise.all([
     humidityData.forEach(e => listHumidity.push(e)),
-    temperatureData.forEach(e => listTemperature.push(e))
+    temperatureData.forEach(e => listTemperature.push(e)),
+    rainData.forEach(e => listRain.push(e))
   ]).then((values) => {
     listHumidity = listHumidity.reverse();
     listTemperature = listTemperature.reverse();
@@ -45,7 +49,8 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     console.log(listHumidity)
     return response.status(201).json({
       humidity: listHumidity,
-      temperature: listTemperature
+      temperature: listTemperature,
+      rain: listRain
     });
 
   });
