@@ -6,6 +6,7 @@ import axios from 'axios'
 
 import CardInformation from '../components/card-information';
 import CardGraph from '../components/card-graph';
+import CardHeader from '../components/card-header';
 
 import { WeatherData } from '../models/weather-data';
 
@@ -131,15 +132,17 @@ export default function Home() {
       padding={8}
       marginTop={4}
     >
+      <CardHeader/>
+
       <Flex
         backgroundColor="gray.700"
         borderRadius="md"
         flexDir={{base: "column", lg: "row"}}
         alignItems="stretch"
         justifyContent="space-around"
-        padding={8}
-        marginTop={4}
-        width="95%"
+        padding={4}
+        marginTop={2}
+        width="100%"
       >
         <CardInformation type="H" label="Umidade" value={lastHumidity}/>
         <CardInformation type="C" label="Clima" value={weatherResponse} sensorValue={lastRain}/>
