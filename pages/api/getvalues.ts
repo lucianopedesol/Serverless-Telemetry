@@ -46,7 +46,6 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     listHumidity = listHumidity.reverse();
     listTemperature = listTemperature.reverse();
 
-    console.log(listHumidity)
     return response.status(201).json({
       humidity: listHumidity,
       temperature: listTemperature,
