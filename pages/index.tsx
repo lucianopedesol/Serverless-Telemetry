@@ -84,7 +84,7 @@ export default function Home() {
         if (isAwait.current) {
           get();
         }
-      }, 15000)
+      }, 30000)
     }
 
     return () => {
