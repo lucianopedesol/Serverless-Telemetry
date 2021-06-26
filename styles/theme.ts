@@ -22,13 +22,13 @@ const customTheme: DefaultTheme = {
     ...theme.colors,
     purple: {
       ...theme.colors.purple,
-      500: '#8257e5',
+      500: '#3C1691',
     },
     gray: {
       ...theme.colors.gray,
       300: '#e1e1e6',
       600: '#29292e',
-      700: '#202024',
+      700: '#1A1C1D',
       800: '#121214'
     },
   },

@@ -50,7 +50,7 @@ export default function CardGraph({label, data, isDataLoad = false}) {
               // For the legend to fit, we make the chart area smaller
               chartArea: { left:40,top:10,width:'95%',height:'85%' },
               legend: 'none',
-              backgroundColor: '#202024'
+              backgroundColor: '#1A1C1D'
             }}
           />:
           <Flex            
