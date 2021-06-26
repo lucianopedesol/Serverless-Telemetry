@@ -1,7 +1,6 @@
 // import Head from 'next/head'
-import { FormEvent, useEffect, useRef, useState } from 'react'
-import { Flex, Image, Button, Text } from '@chakra-ui/core'
-import Input from '../components/Input'
+import { useEffect, useRef, useState } from 'react'
+import { Flex, Select  } from '@chakra-ui/core'
 import axios from 'axios'
 
 import CardInformation from '../components/card-information';
@@ -9,18 +8,6 @@ import CardGraph from '../components/card-graph';
 import CardHeader from '../components/card-header';
 
 import { WeatherData } from '../models/weather-data';
-
-export interface HUMIDITY {
-  subscribeAt: string,
-  value: Number,
-}
-
-export interface TEMPERATURE {
-  subscribeAt: string,
-  value: Number,
-}
-
-
 
 let countDownTimeout: NodeJS.Timeout;
 export default function Home() {
@@ -33,6 +20,7 @@ export default function Home() {
   const [lastRain, setLastRain] = useState<any>()
   const [temperature, setTemperature] = useState<any>([])
   const [isDataLoad, setIsDataLoad] = useState(false);
+  const [cityId, setCityId] = useState("3466954");
 
   const [weatherResponse, setWeatherResponse] = useState<WeatherData>(null);
 
@@ -51,31 +39,14 @@ export default function Home() {
     return dataHora.toLocaleTimeString("pt-BR").substring(0,5);
   }
 
-  async function getWeather(): Promise<WeatherData> {
-    const { data } = await axios.get('https://api.openweathermap.org/data/2.5/find?q=Cariacica&units=metric&lang=pt_br&appid=a0d8bd1b726d4aa647314a354d4aea55');
+  async function getWeather(cityIdParm): Promise<WeatherData> {
+    const { data } = await axios.get(`/api/getopenweather?id=${cityIdParm}`);
 
-    if(data?.list?.length > 0){
-      const retFirstWeather = weatherData(data?.list[0]);
-      return retFirstWeather;
+    if(data){
+      return data;
     } else {
-      console.log("Sem dados");
       return null;
     }
-  }
-
-  function weatherData(weatherParm): WeatherData{
-    const weatherData: WeatherData = new WeatherData().toModel({
-      temperature: weatherParm?.main?.temp,
-      temperatureFeelsLike: weatherParm?.main?.feels_like,
-      temperatureMin: weatherParm?.main?.temp_min,
-      temperatureMax: weatherParm?.main?.temp_max,
-      pressure: weatherParm?.main?.pressure,
-      humidity: weatherParm?.main?.humidity,
-      windSpeed: (weatherParm?.wind?.speed * 3.6).toFixed(2),
-      windDeg: weatherParm?.wind?.deg,
-      weatherDescription: weatherParm?.weather[0]?.description
-     });
-     return weatherData;
   }
 
   async function get() {
@@ -93,7 +64,6 @@ export default function Home() {
     
     setLastRain(data?.rain[0]?.value);
 
-    console.log("Rain", data?.rain[0]?.value);
     setHumidity(h);
     setTemperature(t);
     setLastHumidity(h[h.length-1][1]);
@@ -103,24 +73,35 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (isMount.current)
-      getWeather().then(resp => {
-        setWeatherResponse(resp);
-      });
-      
-      get();
+    getWeather(cityId).then(resp => {
+      setWeatherResponse(resp);
+    });
+    
+    get();
 
+    if (isMount.current){
       setInterval(() => {
         if (isAwait.current) {
           get();
         }
       }, 15000)
+    }
 
     return () => {
       isMount.current = false
       clearTimeout(countDownTimeout);
     }
+
   }, [])
+
+  async function changeValue(event){
+    let cityIdParm = event.target.value;
+    setCityId(cityIdParm);
+
+    let resp = await getWeather(cityIdParm);
+
+    setWeatherResponse(resp);
+  }
 
   return (
     <Flex
@@ -135,17 +116,36 @@ export default function Home() {
 
       <Flex
         backgroundColor="gray.700"
+        flexDir="column"
         borderRadius="md"
-        flexDir={{base: "column", lg: "row"}}
-        alignItems="stretch"
-        justifyContent="space-around"
         padding={4}
         marginTop={2}
         width="100%"
       >
-        <CardInformation type="H" label="Umidade" value={lastHumidity}/>
-        <CardInformation type="C" label="Clima" value={weatherResponse} sensorValue={lastRain}/>
-        <CardInformation type="T" label="Temperatura" value={lastTemperature}/>
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Select 
+            bg="purple.500"
+            width={{base:"100%", md: "30%"}}
+            onChange={(e) => changeValue(e)}
+            value={cityId}
+          >
+            <option value="3466954">Cariacica - ES</option>
+          </Select>
+        </Flex>
+        
+        <Flex
+          flexDir={{base: "column", lg: "row"}}
+          alignItems="stretch"
+          justifyContent="space-around"
+        >
+          <CardInformation type="H" label="Umidade" value={lastHumidity}/>
+          <CardInformation type="C" label="Clima" value={weatherResponse} sensorValue={lastRain}/>
+          <CardInformation type="T" label="Temperatura" value={lastTemperature}/>
+        </Flex>
+        
       </Flex>
 
       <CardGraph label="Umidade" data={humidity} isDataLoad={isDataLoad} />
