@@ -45,7 +45,8 @@ export default function CardGraph({label, data, isDataLoad = false}) {
                 textStyle: {
                   color: '#fff'
                 },
-                slantedText: true
+                slantedText: true,
+                showTextEvery: 10
               },
               // For the legend to fit, we make the chart area smaller
               chartArea: { left:40,top:10,width:'95%',height:'85%' },

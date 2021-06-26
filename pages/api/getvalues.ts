@@ -34,8 +34,8 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   const temperatureCollection = db.collection('temperature');
   const rainCollection = db.collection('rain');
 
-  const humidityData = humidityCollection.find().sort({subscribeAt:-1}).limit(10);
-  const temperatureData = temperatureCollection.find().sort({subscribeAt:-1}).limit(10);
+  const humidityData = humidityCollection.find().sort({subscribeAt:-1}).limit(1000);
+  const temperatureData = temperatureCollection.find().sort({subscribeAt:-1}).limit(1000);
   const rainData = rainCollection.find().sort({subscribeAt:-1}).limit(1);
 
   await Promise.all([
