@@ -5,19 +5,19 @@ export default function CardHeader() {
         <Flex
         backgroundColor="gray.700"
         borderRadius="md"
-        flexDir="row"
+        flexDir={{base:'column', md: 'row'}}
         alignItems="center"
         justifyContent="space-between"
         padding={8}
         marginTop={4}
         width="100%"
-        height="100px"
         >
             <Flex alignItems="flex-end">
                 <Image size="20" src="pi.png" />
                 <Text marginBottom="10px">Telemetry</Text>
             </Flex>
-            <Image width="200px" height="60px" src="logo-faesa-branco.webp" />
+            
+            <Image marginTop={{base:4, md: 0}} width="200px" height="60px" src="logo-faesa-branco.webp" />
         </Flex>
     );
 }

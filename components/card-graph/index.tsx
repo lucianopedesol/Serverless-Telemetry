@@ -26,11 +26,31 @@ export default function CardGraph({label, data, isDataLoad = false}) {
             chartType="AreaChart"
             data={data}
             options={{
+              curveType: 'function',
               height: 400,
-              vAxis: { minValue: 0 },
+              vAxis: { 
+                minValue: 0,
+                gridlines: {
+                  minSpacing: 10
+                },
+                minorGridlines: {
+                  minSpacing: 10
+                },
+                textStyle: { 
+                  color: '#fff'
+                },
+                format: 'decimal'
+              },
+              hAxis: { 
+                textStyle: {
+                  color: '#fff'
+                },
+                slantedText: true
+              },
               // For the legend to fit, we make the chart area smaller
-              chartArea: { height: '80%' },
+              chartArea: { left:40,top:10,width:'95%',height:'85%' },
               legend: 'none',
+              backgroundColor: '#202024'
             }}
           />:
           <Flex            
